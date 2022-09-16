@@ -15,8 +15,8 @@ import java.util.List;
 public class TestVod {
 
     public static void main(String[] args) throws Exception {
-        String accessKeyId = "LTAI5tGQpDiq3hLYprvj5dG1";
-        String accessKeySecret = "jILoCpsITyEAt1b09gcZS22MeDgLFZ";
+        String accessKeyId = "";
+        String accessKeySecret = "";
 
         String title = "001_WC-EditVideo_1 - upload by sdk";   //上传之后文件名称
         String fileName = "F:/001_WC-EditVideo_1.MP4";  //本地文件路径和名称
@@ -43,7 +43,7 @@ public class TestVod {
     //1 根据视频iD获取视频播放凭证
     public static void getPlayAuth() throws Exception{
 
-        DefaultAcsClient client = InitObject.initVodClient("LTAI5tGQpDiq3hLYprvj5dG1", "jILoCpsITyEAt1b09gcZS22MeDgLFZ");
+        DefaultAcsClient client = InitObject.initVodClient("", "");
 
         GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
         GetVideoPlayAuthResponse response = new GetVideoPlayAuthResponse();
@@ -56,7 +56,7 @@ public class TestVod {
     //1 根据视频iD获取视频播放地址
     public static void getPlayUrl() throws Exception{
         //创建初始化对象
-        DefaultAcsClient client = InitObject.initVodClient("LTAI5tGQpDiq3hLYprvj5dG1", "jILoCpsITyEAt1b09gcZS22MeDgLFZ");
+        DefaultAcsClient client = InitObject.initVodClient("", "");
 
         //创建获取视频地址request和response
         GetPlayInfoRequest request = new GetPlayInfoRequest();
