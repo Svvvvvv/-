@@ -34,7 +34,7 @@ public class CanalClient {
     public void run() {
         CanalConnector connector = CanalConnectors.newSingleConnector(new
                 InetSocketAddress("192.168.248.101",
-                11111), "example", "root", "2698063726");
+                11111), "example", "root", "root");
         int batchSize = 1000;
         try {
             connector.connect();
