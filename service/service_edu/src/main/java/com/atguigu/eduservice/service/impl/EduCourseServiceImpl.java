@@ -370,7 +370,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
                             similaritySingle += cosOperate(sim);
                         }
                     }
-                    // 最近的一个帖子与所有历史行为中的帖子相似度之和 similaritySingle;
+                    // 最近的一个课程与所有历史购买中的课程相似度之和 similaritySingle;
                     heap.offer(new CourseToSimilarity(eduCourse, similaritySingle));
                 }
                 int cnt = 0;
