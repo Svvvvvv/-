@@ -8,7 +8,7 @@ import com.atguigu.eduorder.entity.Order;
 import com.atguigu.eduorder.mapper.OrderMapper;
 import com.atguigu.eduorder.service.OrderService;
 import com.atguigu.eduorder.utils.OrderNoUtil;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +54,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setPayType(1);
         int insert = baseMapper.insert(order);
         if (insert == 0) {
-            throw new GuliException(20001,"创建订单失败");
+            throw new SvvvvvException(20001,"创建订单失败");
         }
 
         return order.getOrderNo();

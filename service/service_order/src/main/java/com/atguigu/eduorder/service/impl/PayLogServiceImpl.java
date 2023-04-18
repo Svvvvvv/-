@@ -7,7 +7,7 @@ import com.atguigu.eduorder.mapper.PayLogMapper;
 import com.atguigu.eduorder.service.OrderService;
 import com.atguigu.eduorder.service.PayLogService;
 import com.atguigu.eduorder.utils.HttpClient;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.wxpay.sdk.WXPayUtil;
@@ -86,7 +86,7 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
 
         }catch (Exception e){
             e.printStackTrace();
-            throw new GuliException(20001,"生成二维码失败");
+            throw new SvvvvvException(20001,"生成二维码失败");
         }
 
     }
@@ -146,7 +146,7 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
 
         int insert = baseMapper.insert(payLog);
         if (!(insert > 0)){
-            throw new GuliException(20001,"保存支付记录失败");
+            throw new SvvvvvException(20001,"保存支付记录失败");
         }
 
     }

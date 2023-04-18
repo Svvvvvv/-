@@ -62,6 +62,10 @@ public class UserController {
     @PostMapping("save")
     public R save(@RequestBody User user) {
         user.setPassword(MD5.encrypt(user.getPassword()));
+        User existUser = userService.selectByUsername(user.getUsername());
+        if (existUser != null) {
+            return R.error().message("该用户名已被占用");
+        }
         userService.save(user);
         return R.ok();
     }

@@ -3,15 +3,19 @@ package com.atguigu.eduorder.controller;
 
 import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
+import com.atguigu.commonutils.vo.CourseOrderVo;
 import com.atguigu.eduorder.entity.Order;
 import com.atguigu.eduorder.service.OrderService;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -35,7 +39,7 @@ public class OrderController {
                          HttpServletRequest request){
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
         if (StringUtils.isEmpty(memberId)) {
-            throw new GuliException(20001,"用户未登录");
+            throw new SvvvvvException(20001,"用户未登录");
         }
 
         String orderNo = orderService.createOrder(courseId, memberId);
@@ -62,6 +66,22 @@ public class OrderController {
 
         int count = orderService.count(wrapper);
         return count > 0;
+    }
+
+    // 获取最近购买的五条历史课程id记录
+    @GetMapping("/getPayOrderFive/{memberId}")
+    public List<String> getPayOrderFive(@PathVariable("memberId") String memberId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.eq("member_id",memberId);
+        wrapper.eq("status",1);
+        wrapper.orderByDesc("gmt_modified");
+        wrapper.last("limit 5");
+        List<Order> orders = orderService.list(wrapper);
+        List<String> courseIds = null;
+        if (orders != null && orders.size() > 0) {
+            courseIds = orders.stream().map(Order::getCourseId).collect(Collectors.toList());
+        }
+        return courseIds;
     }
 }
 

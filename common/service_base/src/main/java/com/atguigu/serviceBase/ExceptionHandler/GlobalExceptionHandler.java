@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
         return R.error().message("ArithmeticException异常处理");
     }
 
-    @ExceptionHandler(GuliException.class)
-    public R getExceptionMessage(GuliException exception) {
+    @ExceptionHandler(SvvvvvException.class)
+    public R getExceptionMessage(SvvvvvException exception) {
         //输出异常到日志文件中
         log.error(ExceptionUtil.getMessage(exception));
 

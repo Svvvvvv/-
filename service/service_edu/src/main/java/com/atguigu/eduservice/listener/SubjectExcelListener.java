@@ -5,7 +5,7 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.atguigu.eduservice.entity.EduSubject;
 import com.atguigu.eduservice.entity.excel.SubjectData;
 import com.atguigu.eduservice.service.EduSubjectService;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
@@ -24,10 +24,10 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
     @Override
     public void invoke(SubjectData subjectData, AnalysisContext analysisContext) {
         if (subjectData == null) {
-            throw new GuliException(20001, "excel没有数据");
+            throw new SvvvvvException(20001, "excel没有数据");
         }
 
-        //判断数据库中是否有一级分类
+        // 判断数据库中是否有一级分类
         EduSubject oneSubject = existOneSubject(subjectData.getOneSubjectName());
         if (oneSubject == null) {
             EduSubject eduSubject = new EduSubject();
@@ -35,11 +35,11 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
             eduSubject.setParentId("0");
             boolean save = subjectService.save(eduSubject);
             if (!save) {
-                throw new GuliException(20001,"一级分类保存失败");
+                throw new SvvvvvException(20001,"一级分类保存失败");
             }
         }
 
-        //获取一级分类的id充当二级分类的parent_id
+        // 获取一级分类的id充当二级分类的parent_id
         String pid = oneSubject.getId();
         EduSubject twoSubject = existTwoSubject(subjectData.getTwoSubjectName(), pid);
         if (twoSubject == null) {
@@ -48,7 +48,7 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
             eduSubject.setParentId(pid);
             boolean save = subjectService.save(eduSubject);
             if (!save) {
-                throw new GuliException(20001,"二级分类保存失败");
+                throw new SvvvvvException(20001,"二级分类保存失败");
             }
         }
 

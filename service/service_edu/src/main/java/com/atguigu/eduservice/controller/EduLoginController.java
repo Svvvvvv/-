@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/eduservice/user")
-@Api(tags = "讲师登录管理")
+@Api(tags = "登录管理")
 @Transactional
 public class EduLoginController {
 

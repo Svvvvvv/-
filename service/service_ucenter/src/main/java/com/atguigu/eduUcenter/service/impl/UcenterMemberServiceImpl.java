@@ -7,7 +7,7 @@ import com.atguigu.eduUcenter.entity.vo.LoginVo;
 import com.atguigu.eduUcenter.entity.vo.RegisterVo;
 import com.atguigu.eduUcenter.mapper.UcenterMemberMapper;
 import com.atguigu.eduUcenter.service.UcenterMemberService;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,24 +48,24 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         String phone = loginVo.getMobile();
         String password = loginVo.getPassword();
         if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
-            throw new GuliException(20001, "手机号或密码为空");
+            throw new SvvvvvException(20001, "手机号或密码为空");
         }
         QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
         wrapper.eq("mobile", phone);
         UcenterMember ucenterMember = baseMapper.selectOne(wrapper);
 
         if (ucenterMember == null) {
-            throw new GuliException(20001, "不存在该用户");
+            throw new SvvvvvException(20001, "不存在该用户");
         }
 
         //将获取到的密码经过MD5加密与数据库比较
         if (StringUtils.isEmpty(ucenterMember.getPassword())
                 || !MD5.encrypt(password).equals(ucenterMember.getPassword())) {
-            throw new GuliException(20001, "密码错误");
+            throw new SvvvvvException(20001, "密码错误");
         }
 
         if (ucenterMember.getIsDisabled()){
-            throw new GuliException(20001,"用户被禁用");
+            throw new SvvvvvException(20001,"用户被禁用");
         }
 
         String token = JwtUtils.getJwtToken(ucenterMember.getId(), ucenterMember.getNickname());
@@ -83,18 +83,18 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
                 || StringUtils.isEmpty(mobile)
                 || StringUtils.isEmpty(nickname)
                 || StringUtils.isEmpty(password)){
-            throw new GuliException(20001,"输入信息不完全");
+            throw new SvvvvvException(20001,"输入信息不完全");
         }
         String redisCode = redisTemplate.opsForValue().get(mobile);
         if (!code.equals(redisCode)){
-            throw new GuliException(20001,"验证码不正确");
+            throw new SvvvvvException(20001,"验证码不正确");
         }
 
         QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
         wrapper.eq("mobile", mobile);
         Integer count = baseMapper.selectCount(wrapper);
         if (count > 0 ){
-            throw new GuliException(20001,"该手机号已被注册");
+            throw new SvvvvvException(20001,"该手机号已被注册");
         }
 
         UcenterMember ucenterMember = new UcenterMember();
@@ -105,7 +105,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         ucenterMember.setPassword(MD5.encrypt(password));
         int insert = baseMapper.insert(ucenterMember);
         if (!(insert > 0)) {
-            throw new GuliException(20001,"注册失败");
+            throw new SvvvvvException(20001,"注册失败");
         }
     }
 }

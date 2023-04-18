@@ -36,7 +36,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     
     @Autowired
     private UserService userService;
-    
+
     //获取全部菜单
     @Override
     public List<Permission> queryAllMenu() {
@@ -135,8 +135,8 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             selectPermissionList = baseMapper.selectPermissionByUserId(userId);
         }
 
-        List<Permission> permissionList = PermissionHelper.bulid(selectPermissionList);
-        List<JSONObject> result = MemuHelper.bulid(permissionList);
+        List<Permission> permissionList = PermissionHelper.bulid(selectPermissionList); // 构建树状权限集合
+        List<JSONObject> result = MemuHelper.bulid(permissionList); // 根据树状权限，调用构建菜单的方法生成菜单
         return result;
     }
 
@@ -175,9 +175,9 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     private static List<Permission> bulid(List<Permission> treeNodes) {
         List<Permission> trees = new ArrayList<>();
         for (Permission treeNode : treeNodes) {
-            if ("0".equals(treeNode.getPid())) {
+            if ("0".equals(treeNode.getPid())) { // 一级菜单
                 treeNode.setLevel(1);
-                trees.add(findChildren(treeNode,treeNodes));
+                trees.add(findChildren(treeNode,treeNodes)); // 递归查找子节点
             }
         }
         return trees;
@@ -302,6 +302,10 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             //封装到list集合
             rolePermissionList.add(rolePermission);
         }
+        RolePermission rolePermission = new RolePermission();
+        rolePermission.setRoleId(roleId);
+        rolePermission.setPermissionId("1");
+        rolePermissionList.add(rolePermission);
         //添加到角色菜单关系表
         rolePermissionService.saveBatch(rolePermissionList);
     }

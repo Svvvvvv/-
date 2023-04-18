@@ -46,12 +46,12 @@ public class RedisConfig extends CachingConfigurerSupport {
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new
                 Jackson2JsonRedisSerializer(Object.class);
-//解决查询缓存转换异常的问题
+        //解决查询缓存转换异常的问题
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
-// 配置序列化（解决乱码的问题）,过期时间600秒
+        // 配置序列化（解决乱码的问题）,过期时间600秒
         RedisCacheConfiguration config =
                 RedisCacheConfiguration.defaultCacheConfig()
                         .entryTtl(Duration.ofSeconds(600)) //设置缓存存在的时间 600s

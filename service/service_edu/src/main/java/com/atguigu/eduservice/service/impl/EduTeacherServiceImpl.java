@@ -52,7 +52,7 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
     @Cacheable(value = "teacher",key = "'selectHotTeacher'")
     public List<EduTeacher> getIndexTeacher() {
         QueryWrapper<EduTeacher> wrapper1 = new QueryWrapper<>();
-        wrapper1.orderByDesc("id");
+        wrapper1.orderByDesc("level");
         wrapper1.last("limit 4");
         List<EduTeacher> teacherList = baseMapper.selectList(wrapper1);
         return teacherList;

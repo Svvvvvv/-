@@ -5,7 +5,7 @@ import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.client.VideoClient;
 import com.atguigu.eduservice.entity.EduVideo;
 import com.atguigu.eduservice.service.EduVideoService;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +57,7 @@ public class EduVideoController {
         if (videoSourceId != null) {//小节存在视频
             R r = videoClient.removeVideo(videoSourceId);
             if (r.getCode() == 20001){
-                throw new GuliException(20001,"删除视频失败");
+                throw new SvvvvvException(20001,"删除视频失败");
             }
         }
 

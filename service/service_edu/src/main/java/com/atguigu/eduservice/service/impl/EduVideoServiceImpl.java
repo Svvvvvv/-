@@ -6,10 +6,9 @@ import com.atguigu.eduservice.client.VideoClient;
 import com.atguigu.eduservice.entity.EduVideo;
 import com.atguigu.eduservice.mapper.EduVideoMapper;
 import com.atguigu.eduservice.service.EduVideoService;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,7 +31,6 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
     private VideoClient videoClient;
     @Override
     public void removeVideoByCourseId(String courseId) {
-
         QueryWrapper<EduVideo> wrapper1 = new QueryWrapper<>();
         wrapper1.eq("course_id",courseId);
         //指定只查询video_source_id
@@ -40,15 +38,12 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         List<EduVideo> eduVideos = baseMapper.selectList(wrapper1);
         //转化video_source_id的集合
         List<String> videoIdList = eduVideos.stream().map(EduVideo::getVideoSourceId).filter(Objects::nonNull).collect(Collectors.toList());
-
         if (videoIdList.size() > 0) {
             R r = videoClient.removeBathVideo(videoIdList);
             if (r.getCode() == 20001){
-                throw new GuliException(20001,"删除多个视频失败");
+                throw new SvvvvvException(20001,"删除多个视频失败");
             }
         }
-
-
         QueryWrapper<EduVideo> wrapper2 = new QueryWrapper<>();
         wrapper2.eq("course_id",courseId);
         baseMapper.delete(wrapper2);

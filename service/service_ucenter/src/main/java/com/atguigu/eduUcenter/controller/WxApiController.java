@@ -5,11 +5,10 @@ import com.atguigu.eduUcenter.entity.UcenterMember;
 import com.atguigu.eduUcenter.service.UcenterMemberService;
 import com.atguigu.eduUcenter.util.ConstantPropertiesUtil;
 import com.atguigu.eduUcenter.util.HttpClientUtils;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -46,7 +45,7 @@ public class WxApiController {
         try {
             result = HttpClientUtils.get(accessTokenUrl);
         } catch (Exception e) {
-            throw new GuliException(20001,"获取access_token失败");
+            throw new SvvvvvException(20001,"获取access_token失败");
         }
 
         Gson gson = new Gson();
@@ -68,7 +67,7 @@ public class WxApiController {
             try {
                 reultUserInfo = HttpClientUtils.get(userInfoUrl);
             } catch (Exception e) {
-                throw new GuliException(20001,"获取用户信息失败");
+                throw new SvvvvvException(20001,"获取用户信息失败");
             }
             HashMap<String,Object> userInfoMap = gson.fromJson(reultUserInfo, HashMap.class);
             String nickname =(String) userInfoMap.get("nickname");

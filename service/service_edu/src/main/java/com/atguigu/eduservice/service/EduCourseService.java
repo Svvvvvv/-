@@ -11,6 +11,7 @@ import com.atguigu.eduservice.entity.vo.CourseQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public interface EduCourseService extends IService<EduCourse> {
 
     void deleteCourse(String courseId);
 
-    List<EduCourse> getIndexCourse();
+    List<EduCourse> getIndexCourse(HttpServletRequest request);
 
     Map<String,Object> pageCourseFront(Page<EduCourse> pageCourse, CourseFrontVo courseQuery);
 

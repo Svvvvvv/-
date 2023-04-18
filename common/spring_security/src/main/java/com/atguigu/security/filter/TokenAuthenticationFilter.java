@@ -43,6 +43,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         logger.info("================="+req.getRequestURI());
+        // 前台请求，直接通过
         if(req.getRequestURI().indexOf("admin") == -1) {
             chain.doFilter(req, res);
             return;
@@ -50,13 +51,13 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authentication = null;
         try {
-            authentication = getAuthentication(req);
+            authentication = getAuthentication(req); // 根据token进行授权
         } catch (Exception e) {
             ResponseUtil.out(res, R.error());
         }
 
         if (authentication != null) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication); // 将返回的Authentication存到上下文中
         } else {
             ResponseUtil.out(res, R.error());
         }
@@ -67,8 +68,9 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
         // token置于header里
         String token = request.getHeader("token");
         if (token != null && !"".equals(token.trim())) {
+            //根据token获取 用户名
             String userName = tokenManager.getUserFromToken(token);
-
+            //根据用户名获取redis中的权限数据
             List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(userName);
             Collection<GrantedAuthority> authorities = new ArrayList<>();
             for(String permissionValue : permissionValueList) {

@@ -8,7 +8,7 @@ import com.atguigu.eduservice.entity.subject.TwoSubject;
 import com.atguigu.eduservice.listener.SubjectExcelListener;
 import com.atguigu.eduservice.mapper.EduSubjectMapper;
 import com.atguigu.eduservice.service.EduSubjectService;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -40,7 +40,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             InputStream is = file.getInputStream();
             EasyExcel.read(is, SubjectData.class,new SubjectExcelListener(subjectService)).sheet().doRead();
         } catch (IOException e) {
-            throw new GuliException(20001,"添加课程分类获取输入流失败");
+            throw new SvvvvvException(20001,"添加课程分类获取输入流失败");
         }
 
     }

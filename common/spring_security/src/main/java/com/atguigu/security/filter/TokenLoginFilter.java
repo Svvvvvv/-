@@ -40,9 +40,11 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         this.tokenManager = tokenManager;
         this.redisTemplate = redisTemplate;
         this.setPostOnly(false);
+        //指定登录接口及提交方式
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/acl/login","POST"));
     }
 
+    //获取用户名和密码 认证
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException {
@@ -68,8 +70,11 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
+        //获取认证对象
         SecurityUser user = (SecurityUser) auth.getPrincipal();
+        //根据用户名生成token
         String token = tokenManager.createToken(user.getCurrentUserInfo().getUsername());
+        //将用户的权限数据存入redis
         redisTemplate.opsForValue().set(user.getCurrentUserInfo().getUsername(), user.getPermissionValueList());
 
         ResponseUtil.out(res, R.ok().data("token", token));

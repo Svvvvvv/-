@@ -7,7 +7,7 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.utils.StringUtils;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
-import com.atguigu.serviceBase.ExceptionHandler.GuliException;
+import com.atguigu.serviceBase.ExceptionHandler.SvvvvvException;
 import com.atguigu.vod.service.VodService;
 import com.atguigu.vod.util.AliyunVodSDKUtil;
 import com.atguigu.vod.util.ConstantPropertiesUtil;
@@ -43,12 +43,12 @@ public class VodServiceImpl implements VodService {
                         response.getCode() + ", message：" + response.getMessage();
                 log.warn(errorMessage);
                 if(StringUtils.isEmpty(videoId)){
-                    throw new GuliException(20001, errorMessage);
+                    throw new SvvvvvException(20001, errorMessage);
                 }
             }
             return videoId;
         } catch (IOException e) {
-            throw new GuliException(20001, "guli vod 服务上传失败");
+            throw new SvvvvvException(20001, "vod 服务上传失败");
         }
     }
 
@@ -60,7 +60,7 @@ public class VodServiceImpl implements VodService {
             request.setVideoIds(videoId);
             client.getAcsResponse(request);
         } catch (ClientException e) {
-            throw new GuliException(20001,"删除视频失败");
+            throw new SvvvvvException(20001,"删除视频失败");
         }
 
     }
@@ -74,7 +74,7 @@ public class VodServiceImpl implements VodService {
             request.setVideoIds(idList);
             client.getAcsResponse(request);
         } catch (ClientException e) {
-            throw new GuliException(20001,"删除视频失败");
+            throw new SvvvvvException(20001,"删除视频失败");
         }
     }
 }

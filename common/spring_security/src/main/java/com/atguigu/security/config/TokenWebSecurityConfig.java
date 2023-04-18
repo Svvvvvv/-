@@ -52,12 +52,12 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.exceptionHandling()
-                .authenticationEntryPoint(new UnauthorizedEntryPoint())
-                .and().csrf().disable()
+                .authenticationEntryPoint(new UnauthorizedEntryPoint()) // 指定未授权的统一处理方式
+                .and().csrf().disable() // 关闭CSRF保护机制
                 .authorizeRequests()
-                .anyRequest().authenticated()
-                .and().logout().logoutUrl("/admin/acl/index/logout")
-                .addLogoutHandler(new TokenLogoutHandler(tokenManager,redisTemplate)).and()
+                .anyRequest().authenticated() // 对每个请求都进行认证
+                .and().logout().logoutUrl("/admin/acl/index/logout") // 指定登出请求url
+                .addLogoutHandler(new TokenLogoutHandler(tokenManager,redisTemplate)).and() // 指定登出处理方式
                 .addFilter(new TokenLoginFilter(authenticationManager(), tokenManager, redisTemplate))
                 .addFilter(new TokenAuthenticationFilter(authenticationManager(), tokenManager, redisTemplate)).httpBasic();
     }

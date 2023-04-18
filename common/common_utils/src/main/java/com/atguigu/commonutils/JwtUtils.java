@@ -21,11 +21,11 @@ public class JwtUtils {
     //生成token字符串方法
     public static String getJwtToken(String id, String nickname) {
         String JwtToken = Jwts.builder()
-                //设置jwt头信息，红色部分，内容固定，不需要改
+                //设置jwt头信息
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "HS256")
 
-                .setSubject("guli-user")
+                .setSubject("Svvvvv-user")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))//设置过期时间
 
